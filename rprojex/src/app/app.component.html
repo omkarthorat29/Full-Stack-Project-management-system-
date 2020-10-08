@@ -1,0 +1,70 @@
+<nav class="navbar navbar-light bg-light" *ngIf="isLoggin()">
+  <a routerLink="" class="navbar-brand"
+    ><b>Rprojecx</b>
+    <span class="px-2 ml-1 text-primary" style="font-size: 0.8em;"
+      >Welcome Back ! {{ auth.getUser.name | titlecase }}</span
+    ></a
+  >
+
+  <div class="form-inline">
+    <button
+      routerLink="home"
+      routerLinkActive="active"
+      type="button"
+      name=""
+      id=""
+      class="btn rounded"
+    >
+      <i class="fa fa-tachometer" aria-hidden="true"></i>
+
+      Dashboard
+    </button>
+    <button
+      routerLink="all-project"
+      routerLinkActive="active"
+      type="button"
+      name=""
+      id=""
+      class="btn rounded"
+    >
+      <i class="fa fa-tasks" aria-hidden="true"></i>
+
+      All Project
+    </button>
+
+    <button
+      routerLink="all-member"
+      routerLinkActive="active"
+      type="button"
+      name=""
+      id=""
+      class="btn rounded"
+    >
+      <i class="fa fa-users" aria-hidden="true"></i>
+
+      All Members
+    </button>
+    <button
+      routerLink="profile"
+      routerLinkActive="active"
+      type="button"
+      name=""
+      id=""
+      class="btn rounded"
+    >
+      <i class="fa fa-user" aria-hidden="true"></i>
+      View Profile
+    </button>
+    <button
+      (click)="auth.logout()"
+      type="button"
+      name=""
+      id=""
+      class="btn rounded"
+    >
+      <i class="fa fa-sign-out" aria-hidden="true"></i>
+      Log out
+    </button>
+  </div>
+</nav>
+<router-outlet></router-outlet>

@@ -1,0 +1,239 @@
+<div id="overlay">
+  <div class="ov px-3">
+    <div class="float-right" (click)="off()" style="cursor: pointer;">
+      <h3><i class="fa fa-times-circle-o" aria-hidden="true"></i></h3>
+    </div>
+
+    <div class="pt-5">
+      <div class="form-group">
+        <label for="">Assign To :</label>
+        <select [(ngModel)]="pid" class="form-control" name="" id="">
+          <option value="{{ a.u_id }}" *ngFor="let a of teamMembers">{{
+            a.name
+          }}</option>
+        </select>
+      </div>
+    </div>
+    <button
+      type="button"
+      (click)="addMemberTask(t.id)"
+      name=""
+      id=""
+      style="margin-top: 60px;"
+      class="btn btn-primary btn btn-block"
+    >
+      Assign
+    </button>
+  </div>
+</div>
+
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-3">
+      <ul class="list-group">
+        <li
+          class="list-group-item"
+          [class.active]="selected == 'profile'"
+          (click)="select('profile')"
+        >
+          Project
+        </li>
+        <li
+          class="list-group-item"
+          [class.active]="selected == 'add'"
+          (click)="select('add')"
+          *ngIf="project && project.leader_id == this.auth.id"
+        >
+          Add Task
+        </li>
+        <li
+          class="list-group-item"
+          [class.active]="selected == 'ptask'"
+          (click)="select('ptask')"
+        >
+          View Pending Task
+          <span class="badge badge-pill badge-light">{{
+            projectStatus?.length
+          }}</span>
+        </li>
+        <li
+          class="list-group-item"
+          [class.active]="selected == 'ctask'"
+          (click)="select('ctask')"
+        >
+          View Completed Task
+          <span class="badge badge-pill badge-light">{{
+            projectStatus1?.length
+          }}</span>
+        </li>
+      </ul>
+    </div>
+    <div class="col border p-4">
+      <div *ngIf="selected == 'profile'">
+        <div>
+          <h5>{{ project?.p_name }}</h5>
+          <h6>{{ project?.p_discription }}</h6>
+          <span class="text-primary"
+            >Project Leader : {{ project?.leader_name }}</span
+          >
+          <br />
+          <button
+            type="button"
+            name=""
+            (click)="update(project.p_id, 'completed')"
+            *ngIf="
+              project &&
+              project.leader_id == this.auth.id &&
+              project.status != 'completed'
+            "
+            id=""
+            class="btn btn-success btn-sm my-3"
+          >
+            Marks As Completed
+          </button>
+          <button
+            type="button"
+            name=""
+            (click)="update(project.p_id, 'pending')"
+            *ngIf="
+              project &&
+              project.leader_id == this.auth.id &&
+              project.status == 'completed'
+            "
+            id=""
+            class="btn btn-danger btn-sm my-3"
+          >
+            Marks As Pending
+          </button>
+        </div>
+        <div *ngIf="teamMembers" class="mt-4">
+          <h4>Team: {{ teamMembers[0].team_name }}</h4>
+          <h6 class="px-1">Total Members : {{ teamMembers.length }}</h6>
+          <ul class="list-group mt-4">
+            <li *ngFor="let a of teamMembers" class="list-group-item">
+              {{ a.name }}
+              <p class="text-primary">{{ a.designation }}</p>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div *ngIf="selected == 'add'">
+        <div class="form-group">
+          <label for="">Enter Task Name</label>
+          <input [(ngModel)]="data.name" type="text" class="form-control" />
+        </div>
+        <div class="form-group">
+          <label for="">Enter Task De scription</label>
+          <textarea
+            [(ngModel)]="data.description"
+            type="text"
+            class="form-control"
+          >
+          </textarea>
+        </div>
+        <div class="form-group">
+          <label for="">Enter Task Cost</label>
+          <input [(ngModel)]="data.cost" type="text" class="form-control" />
+        </div>
+
+        <div class="form-group">
+          <label for="">Enter Task Due Date</label>
+          <div class="input-group">
+            <input
+              class="form-control"
+              placeholder="yyyy-mm-dd"
+              name="dp"
+              [(ngModel)]="model"
+              ngbDatepicker
+              #d="ngbDatepicker"
+            />
+            <div class="input-group-append">
+              <button
+                class="btn btn-outline-secondary calendar"
+                (click)="d.toggle()"
+                type="button"
+              >
+                <i class="fa fa-calendar" aria-hidden="true"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <button
+          (click)="addTask()"
+          type="button"
+          name=""
+          id=""
+          class="btn btn-primary float-right"
+        >
+          Add Task
+        </button>
+      </div>
+
+      <div *ngIf="selected == 'ptask'">
+        <ul class="list-group" *ngIf="projectStatus">
+          <li class="list-group-item" *ngFor="let a of projectStatus.reverse()">
+            <button
+              *ngIf="!a.user && project.leader_id == this.auth.id"
+              (click)="on(a)"
+              type="button"
+              name=""
+              id=""
+              class="btn btn-warning btn-sm"
+            >
+              Assign Member
+            </button>
+            <h6 class="text-danger border-bottom py-2">
+              Due Date : {{ a.due_date | date: "MMM d, y" }}
+            </h6>
+            <h6>{{ a.name }}</h6>
+            <span>{{ a.description }}</span
+            ><br />
+            <p>created on : {{ a.created_at }}</p>
+            <br />
+
+            <ul class="list-group m-3 py-2">
+              <li class="list-group-item bg-light">
+                Task Assigned to : {{ a.user?.name }}
+              </li>
+            </ul>
+            <button
+              type="button"
+              (click)="updateTask(a.id, 'completed')"
+              name=""
+              id=""
+              *ngIf="project.leader_id == this.auth.id"
+              class="btn btn-success btn-sm my-3"
+            >
+              Mark As Complete
+            </button>
+          </li>
+        </ul>
+      </div>
+
+      <div *ngIf="selected == 'ctask'">
+        <ul class="list-group">
+          <li class="list-group-item" *ngFor="let a of projectStatus1">
+            <p>created on : {{ a.created_at }}</p>
+            <h6>{{ a.name }}</h6>
+            <span>{{ a.description }}</span
+            ><br />
+            <span class="text-primary">{{ a.due_date }}</span
+            ><br />
+            <button
+              type="button"
+              (click)="updateTask(a.id, 'pending')"
+              name=""
+              id=""
+              *ngIf="project.leader_id == this.auth.id"
+              class="btn btn-success btn-sm my-3"
+            >
+              Mark As Pending
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

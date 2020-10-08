@@ -1,0 +1,194 @@
+<div id="overlay">
+  <div class="container overlay" *ngIf="project">
+    <div class="float-right" (click)="off()" style="cursor: pointer;">
+      <h3><i class="fa fa-times-circle-o" aria-hidden="true"></i></h3>
+    </div>
+    <div class="pt-5">
+      <div class="form-group">
+        <h5>Enter Project Name</h5>
+        <input
+          type="text"
+          [(ngModel)]="pr.name"
+          id=""
+          class="form-control"
+          placeholder=""
+          aria-describedby="helpId"
+        />
+      </div>
+      <div class="form-group">
+        <h5 class="mb-2">Enter Project Discription</h5>
+        <textarea
+          [(ngModel)]="pr.description"
+          class="form-control"
+          id="exampleFormControlTextarea1"
+          rows="3"
+        ></textarea>
+      </div>
+      <div class="form-group">
+        <h5 class="mb-2">Team select</h5>
+        <select
+          [(ngModel)]="pr.team_code"
+          class="form-control"
+          id="exampleFormControlSelect1"
+        >
+          <option value="{{ a.team_code }}" *ngFor="let a of allTeams">{{
+            a.teamname
+          }}</option>
+        </select>
+      </div>
+    </div>
+    <div class="float-right mt-5">
+      <button
+        (click)="newProject()"
+        type="button"
+        name=""
+        id=""
+        class="btn pbtn"
+      >
+        <i class="fa fa-plus" aria-hidden="true"></i>
+        Create New Project
+      </button>
+    </div>
+  </div>
+  <div class="container overlay1" *ngIf="team">
+    <div class="float-right" (click)="off()" style="cursor: pointer;">
+      <h3><i class="fa fa-times-circle-o" aria-hidden="true"></i></h3>
+    </div>
+    <div>
+      <div class="form-group pt-5">
+        <h5 for="">Team Name</h5>
+        <input
+          type="text"
+          [(ngModel)]="tm.name"
+          id=""
+          class="form-control"
+          placeholder=""
+          aria-describedby="helpId"
+        />
+      </div>
+    </div>
+    <div class="div" style="padding-top: 120px;">
+      <button
+        (click)="createTeam()"
+        type="button"
+        name=""
+        id=""
+        class="btn btn-primary btn-lg btn-block"
+      >
+        Create Team
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid mt-3">
+  <div class="row">
+    <div class="col-2 project">
+      <button
+        (click)="on('project')"
+        type="button"
+        class="btn pbtn btn-sm btn-block"
+      >
+        Add New Project
+      </button>
+      <h5 class="py-3">Ongoing Project</h5>
+      <div class="overflow-auto" style="height: 90vh;">
+        <div
+          class="card my-2 mr-2"
+          (click)="selectData(a)"
+          *ngFor="let a of projectList"
+        >
+          <div class="card-body" [class.active-card]="p_id == a.p_id">
+            <h4 class="card-title">{{ a.name }}</h4>
+            <p class="card-text">Lead By : {{ a.uname }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col main p-5">
+      <div *ngIf="data">
+        <h3>{{ data.name }}</h3>
+
+        <h6 class="text-primary">Lead By : {{ data.uname }}</h6>
+
+        <div class="float-right">
+          <button
+            (click)="goToProject(data.p_id)"
+            type="button"
+            name=""
+            id=""
+            class="btn btn-primary btn-sm"
+          >
+            View Project
+          </button>
+        </div>
+
+        <div class="mt-5" *ngIf="projectTeam">
+          <h5>Team Name : {{ projectTeam[0].team_name }}</h5>
+
+          <ul class="list-group mt-4">
+            <li *ngFor="let a of projectTeam" class="list-group-item">
+              {{ a.name }}
+              <p class="text-primary">{{ a.designation }}</p>
+            </li>
+          </ul>
+        </div>
+        <div class="row mt-5 pt-5">
+          <div class="col">
+            <div
+              class="card text-center mcard"
+              style="background-color: hsl(17, 73%, 60%);"
+            >
+              <div class="card-body">
+                <h4 class="card-title">Total Member</h4>
+                <p class="card-text">{{ projectTeam?.length }}</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col">
+            <div
+              class="card text-center mcard"
+              style="background-color: #f37121;"
+            >
+              <div class="card-body">
+                <h4 class="card-title">Pending Project</h4>
+                <p class="card-text">{{ projectList.length }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-3">
+      <button
+        (click)="on('team')"
+        type="button"
+        class="btn tbtn btn-sm btn-block"
+      >
+        Add New Team
+      </button>
+      <h5 class="py-3 px-3">All Teams</h5>
+      <div class="overflow-auto" style="height: 90vh;">
+        <div class="d-flex row flex-wrap p-2 mr-1">
+          <div
+            class="col-6 tcol pl-1"
+            *ngFor="let a of allTeams; let i = index"
+          >
+            <div
+              class="card m-1 text-center tcard"
+              (click)="goToTeam(a)"
+              [ngStyle]="{ 'background-color': getColors(i) }"
+            >
+              <div class="card-body">
+                <h6 class="card-text">{{ a.teamname }}</h6>
+                <h4 class="card-title">{{ a.leadby }}</h4>
+                <p>{{ a.user?.length }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

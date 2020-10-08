@@ -1,0 +1,62 @@
+<div class="container mt-5">
+  <div
+    class="row"
+    style="
+      margin-top: 150px;
+      -moz-box-shadow: 0 0 5px #999;
+      -webkit-box-shadow: 0 0 5px #999;
+      box-shadow: 0 0 5px #999;
+    "
+  >
+    <div class="col p-3" style="border-right: 1px solid gray;">
+      <h5>Login</h5>
+      <h6 class="text-danger">{{ err }}</h6>
+      <div class="form-group">
+        <label for="">Enter Password</label>
+        <input
+          type="text"
+          [(ngModel)]="name"
+          id=""
+          class="form-control"
+          placeholder=""
+          aria-describedby="helpId"
+        />
+      </div>
+      <button (click)="login()" type="button" class="btn btn-primary">
+        Login
+      </button>
+    </div>
+    <div class="col p-3">
+      <h5>Register</h5>
+      <div class="form-group">
+        <label for="">Enter Name</label>
+        <input [(ngModel)]="data.name" type="name" class="form-control" />
+      </div>
+      <div class="form-group">
+        <label for="">Enter Designation</label>
+        <input
+          [(ngModel)]="data.designation"
+          type="name"
+          class="form-control"
+        />
+      </div>
+      <div class="form-group">
+        <label for="">Enter DOB</label>
+        <input [(ngModel)]="data.bod" type="name" class="form-control" />
+      </div>
+
+      <div class="form-group">
+        <label for="">Enter Password</label>
+        <input
+          [(ngModel)]="data.password"
+          type="password"
+          class="form-control"
+        />
+      </div>
+
+      <button (click)="reigister()" type="button" class="btn btn-primary">
+        Register
+      </button>
+    </div>
+  </div>
+</div>

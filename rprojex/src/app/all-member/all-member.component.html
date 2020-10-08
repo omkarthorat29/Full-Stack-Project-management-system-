@@ -1,0 +1,14 @@
+<div class="container p-5">
+  <!-- <h4>Row data from button 1:</h4>
+  <pre>{{ rowDataClicked1 | json }}</pre> -->
+  <div style="margin-left: 150px;">
+    <ag-grid-angular
+      style="width: 600px; height: 600px;"
+      class="ag-theme-alpine"
+      [pagination]="true"
+      [rowData]="rowData | async"
+      [columnDefs]="columnDefs"
+    >
+    </ag-grid-angular>
+  </div>
+</div>

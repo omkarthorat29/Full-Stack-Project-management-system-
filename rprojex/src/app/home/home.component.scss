@@ -1,0 +1,108 @@
+.main {
+  border: unset;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  -webkit-box-shadow: -1px 2px 12px -3px rgba(199, 187, 199, 1);
+  -moz-box-shadow: -1px 2px 12px -3px rgba(199, 187, 199, 1);
+  box-shadow: -1px 2px 12px -3px rgba(199, 187, 199, 1);
+}
+.card:hover {
+  cursor: pointer;
+}
+::-webkit-scrollbar {
+  width: 5px; /* Remove scrollbar space */
+  height: 5px;
+  background: rgba(
+    224,
+    214,
+    214,
+    0.836
+  ) !important; /* Optional: just make scrollbar invisible */
+}
+::-webkit-scrollbar-thumb {
+  background-color: rgb(85, 80, 80);
+  border-right: none;
+  border-left: none;
+}
+.pbtn {
+  background-color: rgb(74, 207, 74);
+  border-radius: 10px;
+  padding: 5px;
+
+  color: white;
+  // width: 300px;
+  margin: 0 auto;
+}
+.tbtn {
+  background-color: rgb(74, 94, 207);
+  border-radius: 10px;
+  padding: 5px;
+
+  color: white;
+  width: 300px;
+  margin: 0 auto;
+}
+
+#overlay {
+  position: fixed;
+  display: none;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 2;
+}
+
+.overlay {
+  margin: 5vh auto;
+  border-radius: 10px;
+  width: 50%;
+  height: 60%;
+  background-color: white;
+}
+.overlay1 {
+  margin: 10vh auto;
+  border-radius: 10px;
+  width: 40%;
+  height: 40%;
+  background-color: white;
+}
+input {
+  border: none;
+  border-radius: unset;
+  border-bottom: 2px solid rgb(47, 155, 197);
+}
+
+.form-group {
+  h5 {
+    margin: 0;
+  }
+}
+.form-control:focus {
+  border-bottom: 1px solid #ffbb0000;
+}
+.tcard {
+  color: white;
+  border: 0px;
+  height: 200px;
+  border-radius: 10px;
+  p {
+    font-size: 70px;
+
+    text-shadow: 2px 2px 0px #0a0a0a;
+  }
+}
+.tcol {
+  margin: 0;
+  padding: 0;
+}
+.mcard {
+  border: none;
+  color: white;
+}
+.active-card {
+  border-left: 5px solid green;
+}

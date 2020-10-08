@@ -1,0 +1,109 @@
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-3">
+      <ul class="list-group">
+        <li
+          class="list-group-item"
+          [class.active]="team"
+          (click)="select('team')"
+        >
+          <i class="fa fa-users" aria-hidden="true"></i>
+          Team
+        </li>
+        <li
+          *ngIf="teamMembers[0].team_leader_id == this.auth.id"
+          class="list-group-item"
+          (click)="select('edit')"
+          [class.active]="edit"
+        >
+          <i class="fa fa-pencil mr-2" aria-hidden="true"></i>
+          Edit Team
+        </li>
+        <li
+          class="list-group-item"
+          *ngIf="teamMembers[0].team_leader_id == this.auth.id"
+          (click)="select('add')"
+          [class.active]="add"
+        >
+          <i class="fa fa-plus-square mr-2" aria-hidden="true"></i>
+          Add Team Members
+        </li>
+      </ul>
+    </div>
+    <div class="col py-4" style="border: 0.2px solid rgb(214, 208, 208);">
+      <div *ngIf="team" class="p-4">
+        <div *ngFor="let a of teamMembers">
+          <h4 *ngIf="a.team_leader_id == a.u_id">{{ a.team_name }}</h4>
+          <h6 *ngIf="a.team_leader_id == a.u_id" class="text-primary mb-3">
+            Lead By : {{ a.name }}
+          </h6>
+        </div>
+        <h6 class="mb-4">Team Members : {{ teamMembers.length }}</h6>
+        <ul class="list-group mt-4">
+          <li *ngFor="let a of teamMembers" class="list-group-item">
+            {{ a.name }}
+            <p class="text-primary">{{ a.designation }}</p>
+          </li>
+        </ul>
+      </div>
+      <div *ngIf="edit" class="p-4">
+        <div *ngFor="let a of teamMembers">
+          <h4 *ngIf="a.team_leader_id == a.u_id">{{ a.team_name }}</h4>
+          <h6 *ngIf="a.team_leader_id == a.u_id" class="text-primary mb-3">
+            Lead By : {{ a.name }}
+          </h6>
+        </div>
+
+        <h6 class="mb-4">Team Members : {{ teamMembers?.length }}</h6>
+        <div
+          class="row p-2 my-3"
+          *ngFor="let a of teamMembers"
+          style="
+            border-radius: 10px;
+            -moz-box-shadow: 0 0 5px #999;
+            -webkit-box-shadow: 0 0 5px #999;
+            box-shadow: 0 0 5px #999;
+          "
+        >
+          <div class="col-5">
+            <h5>
+              {{ a.name }}
+            </h5>
+          </div>
+          <div class="col-5 text-primary">
+            <h5>
+              {{ a.designation }}
+            </h5>
+          </div>
+          <div
+            class="col"
+            style="cursor: pointer;"
+            (click)="deleteTeam(a.u_id)"
+            *ngIf="a.team_leader_id == this.auth.id && a.u_id != this.auth.id"
+          >
+            <i
+              class="fa fa-times p-2"
+              style="background-color: red; color: white; border-radius: 100px;"
+              aria-hidden="true"
+            ></i>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="add">
+        <!-- <h4>Row data from button 1:</h4>
+  <pre>{{ rowDataClicked1 | json }}</pre> -->
+
+        <h6>Total Users : {{ len }}</h6>
+
+        <ag-grid-angular
+          style="width: 100%; height: 600px;"
+          class="ag-theme-alpine"
+          [pagination]="true"
+          [rowData]="rowData | async"
+          [columnDefs]="columnDefs"
+          [frameworkComponents]="frameworkComponents"
+        ></ag-grid-angular>
+      </div>
+    </div>
+  </div>
+</div>
