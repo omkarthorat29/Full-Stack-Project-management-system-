@@ -10,7 +10,7 @@ app.use(bodyparser.json());
 var mysqlConnection = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "omkar@1998",
+  password: "password",
   database: "rprojex",
   multipleStatements: true,
 });
